@@ -24,15 +24,53 @@ var IndecisionApp = function (_React$Component) {
     _this.handleDeleteOptions = _this.handleDeleteOptions.bind(_this);
     _this.handlePick = _this.handlePick.bind(_this);
     _this.handleAddOption = _this.handleAddOption.bind(_this);
+    _this.handleDeleteOption = _this.handleDeleteOption.bind(_this);
     return _this;
   }
 
   _createClass(IndecisionApp, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      //this fires after mounting the component on DOM
+      try {
+        var options = JSON.parse(localStorage.getItem('options'));
+        if (options) {
+          this.setState(function () {
+            return { options: options };
+          });
+        }
+      } catch (e) {
+        console.error('json parse failed');
+      }
+    }
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps, prevState) {
+      //this fires when component props or state updates
+      if (prevState.options.length !== this.state.options.length) {
+        var json = JSON.stringify(this.state.options);
+        localStorage.setItem('options', json);
+      }
+    }
+  }, {
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {} //this is just before exiting page or replacing the component by anything else
+
+  }, {
     key: "handleDeleteOptions",
     value: function handleDeleteOptions() {
       this.setState(function () {
+        return { options: [] };
+      });
+    }
+  }, {
+    key: "handleDeleteOption",
+    value: function handleDeleteOption(option) {
+      this.setState(function (prevState) {
         return {
-          options: []
+          options: prevState.options.filter(function (opt) {
+            return opt !== option;
+          })
         };
       });
     }
@@ -40,9 +78,7 @@ var IndecisionApp = function (_React$Component) {
     key: "handleAddOption",
     value: function handleAddOption(newOption) {
       this.setState(function (prevState) {
-        return {
-          options: prevState.options.concat(newOption)
-        };
+        return { options: prevState.options.concat(newOption) };
       });
     }
   }, {
@@ -65,7 +101,8 @@ var IndecisionApp = function (_React$Component) {
         }),
         React.createElement(Options, {
           options: this.state.options,
-          handleDeleteOptions: this.handleDeleteOptions
+          handleDeleteOptions: this.handleDeleteOptions,
+          handleDeleteOption: this.handleDeleteOption
         }),
         React.createElement(AddOptions, {
           options: this.state.options,
@@ -153,6 +190,8 @@ var Options = function (_React$Component4) {
   _createClass(Options, [{
     key: "render",
     value: function render() {
+      var _this5 = this;
+
       return React.createElement(
         "div",
         null,
@@ -170,7 +209,11 @@ var Options = function (_React$Component4) {
             this.props.options.length > 0 ? 'list of options' : 'There is no option'
           ),
           this.props.options.map(function (option) {
-            return React.createElement(Option, { key: option, option: option });
+            return React.createElement(Option, {
+              key: option,
+              option: option,
+              handleDeleteOption: _this5.props.handleDeleteOption
+            });
           })
         )
       );
@@ -192,6 +235,8 @@ var Option = function (_React$Component5) {
   _createClass(Option, [{
     key: "render",
     value: function render() {
+      var _this7 = this;
+
       return React.createElement(
         "div",
         null,
@@ -199,6 +244,13 @@ var Option = function (_React$Component5) {
           "p",
           null,
           this.props.option
+        ),
+        React.createElement(
+          "button",
+          { onClick: function onClick(e) {
+              _this7.props.handleDeleteOption(_this7.props.option);
+            } },
+          " Remove "
         )
       );
     }
@@ -213,13 +265,13 @@ var AddOptions = function (_React$Component6) {
   function AddOptions(props) {
     _classCallCheck(this, AddOptions);
 
-    var _this6 = _possibleConstructorReturn(this, (AddOptions.__proto__ || Object.getPrototypeOf(AddOptions)).call(this, props));
+    var _this8 = _possibleConstructorReturn(this, (AddOptions.__proto__ || Object.getPrototypeOf(AddOptions)).call(this, props));
 
-    _this6.formSubmit = _this6.formSubmit.bind(_this6);
-    _this6.state = {
+    _this8.formSubmit = _this8.formSubmit.bind(_this8);
+    _this8.state = {
       error: ''
     };
-    return _this6;
+    return _this8;
   }
 
   _createClass(AddOptions, [{
