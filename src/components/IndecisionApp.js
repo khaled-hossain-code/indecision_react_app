@@ -10,7 +10,7 @@ class IndecisionApp extends React.Component {
     super(props);
     this.state = {
       title: "Indecision",
-      subtitle: "Your Decision Computer will take",
+      subtitle: "Your Decision Computer will take!!",
       options: []
     }
     this.handleDeleteOptions = this.handleDeleteOptions.bind(this);
