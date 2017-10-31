@@ -4,7 +4,12 @@ class Action extends React.Component {
   render() {
     return (
       <div>
-        <button disabled={!this.props.hasOptions} onClick={this.props.handlePick}> What Should I do? </button>
+        <button 
+          disabled={!this.props.hasOptions} 
+          onClick={this.props.handlePick}
+          className="big-button"
+        >
+          What Should I do? </button>
       </div>
     );
   }

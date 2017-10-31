@@ -4,8 +4,8 @@ class Option extends React.Component {
   render() {
     return (
       <div>
-        <p>{this.props.option}</p>
-        <button onClick={(e) => { this.props.handleDeleteOption(this.props.option) }}> Remove </button>
+        <span>{this.props.option}</span>
+        <button className="button button--link" onClick={(e) => { this.props.handleDeleteOption(this.props.option) }}> Remove </button>
       </div>
     );
   }

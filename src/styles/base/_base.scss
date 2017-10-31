@@ -6,3 +6,11 @@ body {
   font-size: 1.6rem;//1rem = 10px now as the font-size is 62.5*16 =10
   background: $dark-blue;
 }
+
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: default;
+}

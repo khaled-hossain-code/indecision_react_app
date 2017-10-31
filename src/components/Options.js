@@ -6,9 +6,16 @@ class Options extends React.Component {
   render() {
     return (
       <div>
-        <button onClick={this.props.handleDeleteOptions}> Remove All </button>
-        <ol>
-          <p>{this.props.options.length > 0 ? 'list of options' : 'There is no option'}</p>
+        <div className="widget-header">
+          <h3 className="widget-header__title"> Your Options </h3>
+          <button 
+            className="button button--link" 
+            onClick={this.props.handleDeleteOptions}
+          > 
+            Remove All 
+          </button>
+        </div>
+          <p className="widget__message">{this.props.options.length > 0 ? 'list of options' : 'Please Add an Option to get Started'}</p>
           {this.props.options.map((option) => (
             <Option
               key={option}
@@ -16,7 +23,6 @@ class Options extends React.Component {
               handleDeleteOption={this.props.handleDeleteOption}
             />)
           )}
-        </ol>
       </div>
     );
   }
