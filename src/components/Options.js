@@ -16,10 +16,11 @@ class Options extends React.Component {
           </button>
         </div>
           <p className="widget__message">{this.props.options.length > 0 ? 'list of options' : 'Please Add an Option to get Started'}</p>
-          {this.props.options.map((option) => (
+          {this.props.options.map((option, index) => (
             <Option
               key={option}
               option={option}
+              count={index + 1}
               handleDeleteOption={this.props.handleDeleteOption}
             />)
           )}
